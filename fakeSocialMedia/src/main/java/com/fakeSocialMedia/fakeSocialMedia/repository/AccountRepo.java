@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepo extends MongoRepository<Account , String> {
+    boolean existsByEmail(String email);
+    boolean existsByMobile(long mobile);
+
 }

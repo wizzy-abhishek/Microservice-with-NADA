@@ -17,6 +17,6 @@ public class PostDTO {
     private String caption ;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private AccountDTO accountDTO ;
+    private AccountDTO account ;
 
 }
