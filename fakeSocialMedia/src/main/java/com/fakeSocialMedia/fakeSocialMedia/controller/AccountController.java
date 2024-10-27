@@ -27,11 +27,14 @@ public class AccountController {
 
     @GetMapping(path = {"/{accountId}" , "/nada-api-fetch/{accountId}"})
     public ResponseEntity<AccountDTO> getAccountDetails(@PathVariable String accountId , HttpServletRequest request){
+
         boolean isAPIRequest = request.getRequestURI().contains("/nada-api-fetch");
         AccountDTO accountDTO = accountService.findAccountById(accountId);
+
         if(accountDTO.isApiActive() != isAPIRequest){
-            throw new UnallowedAPIException("You are not allowed to make API on this account");
+            throw new UnallowedAPIException("You are not allowed to make API call on this account");
         }
+
         return ResponseEntity.ok(accountDTO);
     }
 }
