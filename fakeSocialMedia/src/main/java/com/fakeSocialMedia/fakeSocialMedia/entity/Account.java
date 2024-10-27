@@ -29,6 +29,8 @@ public class Account {
     @ToString.Exclude
     private List<Post> posts ;
 
+    private boolean apiActive ;
+
     public Account() {
         this.posts = new ArrayList<>();
     }

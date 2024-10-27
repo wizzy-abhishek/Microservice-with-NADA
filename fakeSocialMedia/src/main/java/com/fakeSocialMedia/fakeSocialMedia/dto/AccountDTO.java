@@ -27,6 +27,8 @@ public class AccountDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<PostDTO> posts ;
 
+    private boolean apiActive ;
+
     public AccountDTO() {
         this.posts = new ArrayList<>() ;
     }

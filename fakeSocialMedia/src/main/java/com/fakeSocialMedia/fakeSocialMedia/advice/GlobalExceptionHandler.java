@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(apiError , HttpStatus.BAD_REQUEST) ;
     }
-/*
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<APIError> handleUltimateException(Exception exception){
         APIError apiError = new APIError() ;
@@ -31,6 +31,6 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(apiError , HttpStatus.BAD_GATEWAY) ;
 
-    }*/
+    }
 
 }
