@@ -1,9 +1,6 @@
 package com.fakeBankDetails.fakeBank.entity;
 
-import com.fakeBankDetails.fakeBank.enums.Bank;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -17,22 +14,25 @@ import java.util.List;
 public class AccountHoldersDetails {
 
     @Id
-    @Column(updatable = false )
-    private String accountNumber ;
+    @Column(updatable = false)
+    private String accountNumber;
 
-    private String name ;
+    private String name;
 
-    private BigDecimal balance ;
+    private BigDecimal balance;
 
-    private long mobile ;
+    private long mobile;
 
-    private Bank bank ;
+    private String branch;
 
-    private String branch ;
+    private boolean apiAllowed;
 
-    private boolean apiAllowed ;
+    @ElementCollection
+    private List<String> transactions ;
 
-    private List<String> transactions;
+    @ManyToOne
+    @JoinColumn(name = "user_email", nullable = false)
+    private UserEntity user;
 
     public AccountHoldersDetails() {
         this.transactions = new ArrayList<>();
