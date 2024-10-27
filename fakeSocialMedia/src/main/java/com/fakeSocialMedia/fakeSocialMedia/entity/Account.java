@@ -6,12 +6,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @Document
 public class Account {
 
@@ -29,4 +29,7 @@ public class Account {
     @ToString.Exclude
     private List<Post> posts ;
 
+    public Account() {
+        this.posts = new ArrayList<>();
+    }
 }

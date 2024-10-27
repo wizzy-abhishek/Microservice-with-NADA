@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<APIError> handleDuplicateResource(DuplicateResourceException exception){
 
@@ -19,4 +20,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(apiError , HttpStatus.BAD_REQUEST) ;
     }
+/*
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<APIError> handleUltimateException(Exception exception){
+        APIError apiError = new APIError() ;
+
+        apiError.setStatusCode(HttpStatus.BAD_GATEWAY);
+        apiError.setError(exception.getMessage());
+        apiError.getSubErrors().add(null);
+
+        return new ResponseEntity<>(apiError , HttpStatus.BAD_GATEWAY) ;
+
+    }*/
+
 }

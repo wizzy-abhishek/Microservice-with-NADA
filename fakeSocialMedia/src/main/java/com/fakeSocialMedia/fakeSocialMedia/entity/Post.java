@@ -14,11 +14,11 @@ import java.util.Date;
 public class Post {
 
     @Id
-    private long id ;
+    private String id ;
 
     private Date postDate;
 
     private String caption ;
 
-    private Account account;
+    private String account;
 }

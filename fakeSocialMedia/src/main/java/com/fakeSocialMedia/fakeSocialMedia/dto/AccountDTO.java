@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,5 +26,9 @@ public class AccountDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<PostDTO> posts ;
+
+    public AccountDTO() {
+        this.posts = new ArrayList<>() ;
+    }
 
 }
