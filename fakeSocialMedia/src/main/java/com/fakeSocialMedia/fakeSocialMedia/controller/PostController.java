@@ -31,4 +31,10 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(processedPostDTO);
     }
 
+    @PostMapping("/dumpLoadOfPosts")
+    public ResponseEntity<List<PostDTO>> dumpLoadOfPosts(@RequestBody List<PostDTO> postDTOList){
+        List<PostDTO> postDTOS = postService.dumpLoadOfPosts(postDTOList);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postDTOS);
+    }
+
 }

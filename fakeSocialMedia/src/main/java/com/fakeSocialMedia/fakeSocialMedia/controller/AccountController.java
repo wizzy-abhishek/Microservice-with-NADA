@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequestMapping(path = {"/account" })
 public class AccountController {
@@ -23,6 +26,12 @@ public class AccountController {
     public ResponseEntity<AccountDTO> createNewAccount(@RequestBody @Valid AccountDTO accountDTO){
         AccountDTO processAccountDTO = accountService.createNewAccount(accountDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(processAccountDTO);
+    }
+
+    @PostMapping("/dumpAccounts")
+    public ResponseEntity<List<AccountDTO>> dumpAccounts(@RequestBody @Valid List<AccountDTO> accountDTOS){
+        List<AccountDTO> accountDTOSet = accountService.dumpAllAccount(accountDTOS);
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountDTOSet);
     }
 
     @GetMapping(path = {"/{accountId}" , "/nada-api-fetch/{accountId}"})

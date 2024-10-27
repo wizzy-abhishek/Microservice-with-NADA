@@ -10,6 +10,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class AccountServiceImplement implements AccountService {
 
@@ -61,6 +65,21 @@ public class AccountServiceImplement implements AccountService {
         Account foundAccount = accountRepo.findById(accountId)
                 .orElseThrow(()-> new ResourceNotFoundException("Account with id :" + accountId + "not found"));
         return modelMapper.map(foundAccount , AccountDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public List<AccountDTO> dumpAllAccount(List<AccountDTO> accountDTOS) {
+
+        List<Account> accountSet = accountDTOS.stream()
+                .map(accountEntity -> modelMapper.map(accountEntity , Account.class))
+                .toList();
+
+        List<Account> createdAccounts = accountRepo.insert(accountSet);
+
+        return createdAccounts.stream()
+                .map(accountDTO -> modelMapper.map(accountDTO , AccountDTO.class))
+                .toList();
     }
 
 }

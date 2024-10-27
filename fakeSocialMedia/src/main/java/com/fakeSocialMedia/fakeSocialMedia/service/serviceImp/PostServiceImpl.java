@@ -61,4 +61,34 @@ public class PostServiceImpl implements PostService {
 
         return modelMapper.map(savedPost, PostDTO.class);
     }
+
+    @Override
+    @Transactional
+    public List<PostDTO> dumpLoadOfPosts(List<PostDTO> postDTOList) {
+        List<Post> posts = postDTOList.stream()
+                .map(postDTO -> {
+                    // Fetch Account entity for the post
+                    Account account = modelMapper.map(accountServiceImplement
+                            .findAccountById(postDTO.getAccount()), Account.class);
+
+                    Post post = modelMapper.map(postDTO, Post.class);
+                    post.setPostDate(new Date());
+
+                    post.setId(account.getAccountName() + "-" + account.getEmail().substring(0, 5) + "-" + UUID.randomUUID().toString().substring(0, 5));
+
+                    account.getPosts().add(post);
+
+                    accountRepo.save(account);
+
+                    return post;
+                })
+                .collect(Collectors.toList());
+
+        List<Post> savedPosts = postRepo.insert(posts);
+
+        return savedPosts.stream()
+                .map(savedPost -> modelMapper.map(savedPost, PostDTO.class))
+                .collect(Collectors.toList());
+    }
+
 }
