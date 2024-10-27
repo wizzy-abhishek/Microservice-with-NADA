@@ -8,7 +8,7 @@ public class FakeSocialMediaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FakeSocialMediaApplication.class, args);
-		System.out.println("Hello FAKE SOCIAL MEDIA");
+		System.out.println("Hello FAKE SOCIAL MEDIA ");
 	}
 
 }
