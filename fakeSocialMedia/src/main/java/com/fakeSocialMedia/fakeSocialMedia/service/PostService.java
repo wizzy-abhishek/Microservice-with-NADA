@@ -7,8 +7,7 @@ import java.util.List;
 public interface PostService {
 
     List<PostDTO> getAllPostByAccountId(String accountId);
-
     PostDTO createNewPost(PostDTO postDTO);
-
     List<PostDTO> dumpLoadOfPosts(List<PostDTO> postDTOList);
+
 }
