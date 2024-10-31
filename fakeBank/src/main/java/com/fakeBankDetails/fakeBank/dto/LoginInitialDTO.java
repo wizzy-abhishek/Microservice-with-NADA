@@ -5,11 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class LoginDTO {
+public class LoginInitialDTO {
 
     @Email
     @NotNull
     private final String email ;
-    @NotNull
-    private final int otp ;
 }

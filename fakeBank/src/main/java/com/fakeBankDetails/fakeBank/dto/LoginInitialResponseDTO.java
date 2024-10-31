@@ -1,0 +1,12 @@
+package com.fakeBankDetails.fakeBank.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginInitialResponseDTO {
+    private String message ;
+}

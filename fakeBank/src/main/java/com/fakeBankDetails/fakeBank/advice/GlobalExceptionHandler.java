@@ -1,3 +1,4 @@
+/*
 package com.fakeBankDetails.fakeBank.advice;
 
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+*/
+/*
     @ExceptionHandler(Exception.class)
     public ResponseEntity<APIError> handleUltimateError(Exception exception){
 
@@ -19,5 +22,8 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(apiError);
     }
+*//*
+
 
 }
+*/

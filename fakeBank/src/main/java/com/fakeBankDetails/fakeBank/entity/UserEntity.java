@@ -18,7 +18,6 @@ import java.util.Set;
 public class UserEntity implements UserDetails {
 
     @Id
-    @Column(unique = true)
     private String email;
 
     private long mobile;
@@ -38,7 +37,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return "1234";
     }
 
     @Override

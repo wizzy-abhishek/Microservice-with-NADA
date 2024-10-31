@@ -1,3 +1,4 @@
+/*
 package com.fakeBankDetails.fakeBank.advice;
 
 import lombok.Data;
@@ -27,3 +28,4 @@ public class APIError {
     }
 
 }
+*/
