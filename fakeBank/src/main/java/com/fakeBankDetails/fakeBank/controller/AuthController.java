@@ -29,14 +29,12 @@ public class AuthController {
 
     @PostMapping("/login/{email}")
     public ResponseEntity<LoginInitialResponseDTO> login(@PathVariable String email){
-
         LoginInitialResponseDTO loginInitialResponseDTO = authLoginService.loginInitial(email);
-
         return ResponseEntity.ok(loginInitialResponseDTO);
     }
 
-/*    @PostMapping("/loginInitial")
-    public ResponseEntity<String> loginInitial(){
-
-    }*/
+    @PostMapping("/loginFinal")
+    public ResponseEntity<FinalLoginResponseDTO> loginInitial(@RequestBody UserLoginFinalDTO userLoginFinalDTO) throws Exception {
+        return ResponseEntity.ok(authLoginService.loginFinal(userLoginFinalDTO));
+    }
 }

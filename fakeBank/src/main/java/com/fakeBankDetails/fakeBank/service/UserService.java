@@ -30,13 +30,10 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserDTO signUp(SignUpDTO signUpDTO){
-
         Optional<UserEntity> user = userRepo.findByEmailIgnoreCase(signUpDTO.getEmail());
-
         if (user.isPresent()){
             throw new BadCredentialsException("Email already present " + signUpDTO.getEmail());
         }
-
         UserEntity toBeCreatedUser = modelMapper.map(signUpDTO , UserEntity.class);
 
         UserEntity savingUser = userRepo.save(toBeCreatedUser);

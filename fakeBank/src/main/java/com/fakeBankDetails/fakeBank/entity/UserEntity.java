@@ -22,6 +22,8 @@ public class UserEntity implements UserDetails {
 
     private long mobile;
 
+    private String otp ;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING )
     private Set<Roles> roles;
@@ -37,11 +39,12 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "1234";
+        return this.otp;
     }
 
     @Override
     public String getUsername() {
         return this.email;
     }
+
 }

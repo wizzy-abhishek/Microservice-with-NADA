@@ -10,5 +10,4 @@ public class FakeBankApplication {
 		SpringApplication.run(FakeBankApplication.class, args);
 		System.out.println("Hello FAKE BANK");
 	}
-
 }
