@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.InvalidTimeoutException;
@@ -27,6 +28,7 @@ public class AuthLoginService {
     private final UserRepo userRepo;
     private final EmailService emailService ;
     private final PasswordEncoder passwordEncoder ;
+    private final PasswordEncoder passwordEncoderBCrypt ;
 
     public AuthLoginService(AuthenticationManager authenticationManager,
                             UserRepo userRepo, EmailService emailService, PasswordEncoder passwordEncoder) {
@@ -34,21 +36,25 @@ public class AuthLoginService {
         this.userRepo = userRepo;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
+        this.passwordEncoderBCrypt = new BCryptPasswordEncoder() ;
     }
 
     @Transactional
-    public FinalLoginResponseDTO loginFinal(UserLoginFinalDTO loginDTO){
+    public FinalLoginResponseDTO loginFinal(UserLoginFinalDTO loginDTO) throws Exception{
 
         Authentication  authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken( loginDTO.getEmail() , loginDTO.getOtp()));
 
         UserEntity user = (UserEntity) authentication.getPrincipal();
-            user.setOtp(generateAESOTP());
+        user.setOtp(passwordEncoderBCrypt.encode(generateAESOTP()));
+        System.out.println(user.getOtp());
+        userRepo.save(user);
 
         return new FinalLoginResponseDTO(user.getEmail() + "-" + user.getRoles()) ;
     }
 
     public String generateAESOTP() {
+
         KeyGenerator keyGen = null;
         try {
             keyGen = KeyGenerator.getInstance("AES");
@@ -80,7 +86,6 @@ public class AuthLoginService {
         } catch (BadPaddingException | IllegalBlockSizeException e) {
             throw new RuntimeException(e);
         }
-
         return Base64.getEncoder().encodeToString(encryptedBytes).substring(0, 6);
     }
 
@@ -90,6 +95,7 @@ public class AuthLoginService {
                 String otp = generateAESOTP() ;
                 UserEntity user = userRepo.findById(email).orElseThrow();
                 emailService.sendOTPinMail(email, "OTP", otp );
+                System.out.println(otp);
                 user.setOtp(passwordEncoder.encode(otp));
                 userRepo.save(user);
                 return new LoginInitialResponseDTO("OTP SENT") ;
