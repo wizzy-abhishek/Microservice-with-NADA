@@ -2,7 +2,6 @@ package com.fakeBankDetails.fakeBank.service;
 
 import com.fakeBankDetails.fakeBank.entity.UserEntity;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;

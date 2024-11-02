@@ -8,5 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FinalLoginResponseDTO {
-    private String message ;
+    private String id ;
+    private String accessToken ;
+    private String refreshToken ;
 }

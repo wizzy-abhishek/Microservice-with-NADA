@@ -29,13 +29,15 @@ public class AuthLoginService {
     private final EmailService emailService ;
     private final PasswordEncoder passwordEncoder ;
     private final PasswordEncoder passwordEncoderBCrypt ;
+    private final JWTService jwtService ;
 
     public AuthLoginService(AuthenticationManager authenticationManager,
-                            UserRepo userRepo, EmailService emailService, PasswordEncoder passwordEncoder) {
+                            UserRepo userRepo, EmailService emailService, PasswordEncoder passwordEncoder, JWTService jwtService) {
         this.authenticationManager = authenticationManager;
         this.userRepo = userRepo;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
         this.passwordEncoderBCrypt = new BCryptPasswordEncoder() ;
     }
 
@@ -47,10 +49,13 @@ public class AuthLoginService {
 
         UserEntity user = (UserEntity) authentication.getPrincipal();
         user.setOtp(passwordEncoderBCrypt.encode(generateAESOTP()));
-        System.out.println(user.getOtp());
         userRepo.save(user);
 
-        return new FinalLoginResponseDTO(user.getEmail() + "-" + user.getRoles()) ;
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+
+        return new FinalLoginResponseDTO(user.getEmail() , accessToken , refreshToken) ;
     }
 
     public String generateAESOTP() {

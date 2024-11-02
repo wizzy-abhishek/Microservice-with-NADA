@@ -9,15 +9,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
 
     private final UserService userService ;
     private final AuthLoginService authLoginService ;
@@ -34,7 +31,16 @@ public class AuthController {
     }
 
     @PostMapping("/loginFinal")
-    public ResponseEntity<FinalLoginResponseDTO> loginInitial(@RequestBody UserLoginFinalDTO userLoginFinalDTO) throws Exception {
-        return ResponseEntity.ok(authLoginService.loginFinal(userLoginFinalDTO));
+    public ResponseEntity<FinalLoginResponseDTO> loginInitial(@RequestBody UserLoginFinalDTO userLoginFinalDTO
+                                                            , HttpServletResponse response) throws Exception {
+
+        FinalLoginResponseDTO loginResponseDTO = authLoginService.loginFinal(userLoginFinalDTO);
+
+        Cookie cookie = new Cookie("refreshToken" , loginResponseDTO.getRefreshToken());
+        cookie.setHttpOnly(true);
+        /* cookie.setSecure(false); //Make true when we have https*/
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok(loginResponseDTO);
     }
 }

@@ -1,5 +1,7 @@
 package com.fakeBankDetails.fakeBank.configuration;
 
+import com.fakeBankDetails.fakeBank.filters.JWTFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,10 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
+
+    private final JWTFilter jwtFilter ;
+
+    private static final String[] publicRoutes = {"/auth/**" , "/actuator/**"};
 
     @Bean
     SecurityFilterChain customWebSecurityConfig(HttpSecurity httpSecurity)throws Exception{
@@ -23,9 +31,10 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorization -> authorization
-                        .requestMatchers(HttpMethod.POST ,"/login" , "/signUp").permitAll()
-                        .anyRequest().permitAll()
-                );
+                        .requestMatchers(publicRoutes).permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
+
         return httpSecurity.build();
     }
 
