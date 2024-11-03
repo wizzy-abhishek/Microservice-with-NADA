@@ -1,9 +1,9 @@
 package com.fakeBankDetails.fakeBank.dto;
 
+import com.fakeBankDetails.fakeBank.enums.AccountType;
+import com.fakeBankDetails.fakeBank.enums.IndianState;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.aspectj.weaver.Lint;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +21,10 @@ public class AccountHoldersDetailsDTO {
     private long mobile ;
 
     private String branch ;
+
+    private IndianState state ;
+
+    private AccountType accountType ;
 
     private boolean apiAllowed ;
 

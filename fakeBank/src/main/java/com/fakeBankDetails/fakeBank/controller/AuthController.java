@@ -35,12 +35,15 @@ public class AuthController {
                                                             , HttpServletResponse response) throws Exception {
 
         FinalLoginResponseDTO loginResponseDTO = authLoginService.loginFinal(userLoginFinalDTO);
-
         Cookie cookie = new Cookie("refreshToken" , loginResponseDTO.getRefreshToken());
         cookie.setHttpOnly(true);
-        /* cookie.setSecure(false); //Make true when we have https*/
         response.addCookie(cookie);
 
         return ResponseEntity.ok(loginResponseDTO);
+    }
+
+    @PostMapping("/refresh")
+    public void refreshToken(){
+
     }
 }

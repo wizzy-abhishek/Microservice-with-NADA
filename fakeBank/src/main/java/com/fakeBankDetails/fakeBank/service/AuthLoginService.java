@@ -1,11 +1,13 @@
 package com.fakeBankDetails.fakeBank.service;
 
+import com.fakeBankDetails.fakeBank.dto.AccountHoldersDetailsDTO;
 import com.fakeBankDetails.fakeBank.dto.LoginInitialResponseDTO;
 import com.fakeBankDetails.fakeBank.dto.FinalLoginResponseDTO;
 import com.fakeBankDetails.fakeBank.dto.UserLoginFinalDTO;
 import com.fakeBankDetails.fakeBank.entity.UserEntity;
 import com.fakeBankDetails.fakeBank.repository.UserRepo;
 import lombok.SneakyThrows;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,14 +32,16 @@ public class AuthLoginService {
     private final PasswordEncoder passwordEncoder ;
     private final PasswordEncoder passwordEncoderBCrypt ;
     private final JWTService jwtService ;
+    private final ModelMapper modelMapper ;
 
     public AuthLoginService(AuthenticationManager authenticationManager,
-                            UserRepo userRepo, EmailService emailService, PasswordEncoder passwordEncoder, JWTService jwtService) {
+                            UserRepo userRepo, EmailService emailService, PasswordEncoder passwordEncoder, JWTService jwtService, ModelMapper modelMapper) {
         this.authenticationManager = authenticationManager;
         this.userRepo = userRepo;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        this.modelMapper = modelMapper;
         this.passwordEncoderBCrypt = new BCryptPasswordEncoder() ;
     }
 
@@ -54,8 +58,7 @@ public class AuthLoginService {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
-
-        return new FinalLoginResponseDTO(user.getEmail() , accessToken , refreshToken) ;
+        return new FinalLoginResponseDTO(user.getEmail() , accessToken , refreshToken , user.getAccountHoldersDetailsList());
     }
 
     public String generateAESOTP() {

@@ -1,5 +1,7 @@
 package com.fakeBankDetails.fakeBank.entity;
 
+import com.fakeBankDetails.fakeBank.enums.AccountType;
+import com.fakeBankDetails.fakeBank.enums.IndianState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,24 +17,29 @@ public class AccountHoldersDetails {
 
     @Id
     @Column(updatable = false)
-    private String accountNumber;
+    private String accountNumber ;
 
-    private String name;
+    private String name ;
 
-    private BigDecimal balance;
+    private BigDecimal balance ;
 
-    private long mobile;
+    private long mobile ;
 
-    private String branch;
+    private String branch ;
+
+    @Enumerated(EnumType.STRING)
+    private IndianState state ;
 
     private boolean apiAllowed;
+
+    private AccountType accountType ;
 
     @ElementCollection
     private List<String> transactions ;
 
     @ManyToOne
     @JoinColumn(name = "user_email", nullable = false)
-    private UserEntity user;
+    private UserEntity user ;
 
     public AccountHoldersDetails() {
         this.transactions = new ArrayList<>();
