@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<APIError> illegalArgs(IllegalArgumentException exception){
+
         APIError apiError = new APIError();
 
         apiError.setStatusCode(HttpStatus.I_AM_A_TEAPOT);

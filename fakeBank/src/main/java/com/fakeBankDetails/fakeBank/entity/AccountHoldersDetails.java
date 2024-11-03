@@ -21,7 +21,9 @@ public class AccountHoldersDetails {
 
     private String name ;
 
-    private BigDecimal balance ;
+    private String email ;
+
+    private float balance ;
 
     private long mobile ;
 
@@ -32,13 +34,14 @@ public class AccountHoldersDetails {
 
     private boolean apiAllowed;
 
+    @Enumerated(EnumType.STRING)
     private AccountType accountType ;
 
     @ElementCollection
     private List<String> transactions ;
 
     @ManyToOne
-    @JoinColumn(name = "user_email", nullable = false)
+    @JoinColumn(name = "user_email" , nullable = true)
     private UserEntity user ;
 
     public AccountHoldersDetails() {

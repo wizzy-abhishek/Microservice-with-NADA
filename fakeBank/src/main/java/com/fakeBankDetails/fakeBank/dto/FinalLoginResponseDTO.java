@@ -15,5 +15,5 @@ public class FinalLoginResponseDTO {
     private String id ;
     private String accessToken ;
     private String refreshToken ;
-    private List<AccountHoldersDetails> relatedAccounts = new ArrayList<>();
+    private List<AccountHoldersDetailsDTO> relatedAccounts = new ArrayList<>();
 }

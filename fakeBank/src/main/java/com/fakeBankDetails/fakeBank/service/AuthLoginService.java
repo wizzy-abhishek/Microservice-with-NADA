@@ -22,6 +22,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthLoginService {
@@ -46,7 +48,7 @@ public class AuthLoginService {
     }
 
     @Transactional
-    public FinalLoginResponseDTO loginFinal(UserLoginFinalDTO loginDTO) throws Exception{
+    public FinalLoginResponseDTO loginFinal(UserLoginFinalDTO loginDTO){
 
         Authentication  authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken( loginDTO.getEmail() , loginDTO.getOtp()));
@@ -58,7 +60,11 @@ public class AuthLoginService {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
-        return new FinalLoginResponseDTO(user.getEmail() , accessToken , refreshToken , user.getAccountHoldersDetailsList());
+        List<AccountHoldersDetailsDTO> getAccountDTO = user.getAccountHoldersDetailsList().stream()
+                .map(accountHolderEntity -> modelMapper.map(accountHolderEntity , AccountHoldersDetailsDTO.class))
+                .toList();
+
+        return new FinalLoginResponseDTO(user.getEmail() , accessToken , refreshToken , getAccountDTO);
     }
 
     public String generateAESOTP() {

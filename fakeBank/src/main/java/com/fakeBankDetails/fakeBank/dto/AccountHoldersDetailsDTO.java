@@ -16,7 +16,9 @@ public class AccountHoldersDetailsDTO {
     private String name ;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private BigDecimal balance ;
+    private float balance ;
+
+    private String email ;
 
     private long mobile ;
 
@@ -29,6 +31,6 @@ public class AccountHoldersDetailsDTO {
     private boolean apiAllowed ;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<String> transactions;
+    private List<String> transactions ;
 
 }

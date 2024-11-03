@@ -1,6 +1,7 @@
 package com.fakeBankDetails.fakeBank.enums;
 
 public enum AccountType {
+
     SAVINGS,
     CURRENT,
     FIXED_DEPOSIT,
@@ -11,4 +12,5 @@ public enum AccountType {
     SALARY,
     STUDENT,
     JOINT ;
+
 }
