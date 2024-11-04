@@ -6,6 +6,9 @@ import com.fakeBankDetails.fakeBank.dto.FinalLoginResponseDTO;
 import com.fakeBankDetails.fakeBank.dto.UserLoginFinalDTO;
 import com.fakeBankDetails.fakeBank.entity.UserEntity;
 import com.fakeBankDetails.fakeBank.repository.UserRepo;
+import com.fakeBankDetails.fakeBank.service.interfaces.AuthLoginServiceInterface;
+import com.fakeBankDetails.fakeBank.service.interfaces.EmailServiceInterface;
+import com.fakeBankDetails.fakeBank.service.interfaces.JWTServiceInterface;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,18 +29,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthLoginService {
+public class AuthLoginService implements AuthLoginServiceInterface {
 
     private final AuthenticationManager authenticationManager ;
     private final UserRepo userRepo;
-    private final EmailService emailService ;
+    private final EmailServiceInterface emailService ;
     private final PasswordEncoder passwordEncoder ;
     private final PasswordEncoder passwordEncoderBCrypt ;
-    private final JWTService jwtService ;
+    private final JWTServiceInterface jwtService ;
     private final ModelMapper modelMapper ;
 
     public AuthLoginService(AuthenticationManager authenticationManager,
-                            UserRepo userRepo, EmailService emailService, PasswordEncoder passwordEncoder, JWTService jwtService, ModelMapper modelMapper) {
+                            UserRepo userRepo, EmailServiceInterface emailService, PasswordEncoder passwordEncoder, JWTServiceInterface jwtService, ModelMapper modelMapper) {
         this.authenticationManager = authenticationManager;
         this.userRepo = userRepo;
         this.emailService = emailService;
@@ -67,7 +70,7 @@ public class AuthLoginService {
         return new FinalLoginResponseDTO(user.getEmail() , accessToken , refreshToken , getAccountDTO);
     }
 
-    public String generateAESOTP() {
+    private String generateAESOTP() {
 
         KeyGenerator keyGen = null;
         try {

@@ -1,6 +1,7 @@
 package com.fakeBankDetails.fakeBank.service;
 
 import com.fakeBankDetails.fakeBank.entity.UserEntity;
+import com.fakeBankDetails.fakeBank.service.interfaces.JWTServiceInterface;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -12,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Service
-public class JWTService {
+public class JWTService implements JWTServiceInterface {
 
     @Value("${jwt.secretKey}")
     private String jwtSecretKey ;

@@ -1,7 +1,7 @@
 package com.fakeBankDetails.fakeBank.controller;
 
 import com.fakeBankDetails.fakeBank.dto.AccountHoldersDetailsDTO;
-import com.fakeBankDetails.fakeBank.service.AccountHolderDetailsService;
+import com.fakeBankDetails.fakeBank.service.interfaces.AccountHolderDetailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/accountHolder")
 public class AccountHolderController {
 
-    private final AccountHolderDetailsService accountHolderDetailsService ;
+    private final AccountHolderDetailService accountHolderDetailsService ;
 
-    public AccountHolderController(AccountHolderDetailsService accountHolderDetailsService) {
+    public AccountHolderController(AccountHolderDetailService accountHolderDetailsService) {
         this.accountHolderDetailsService = accountHolderDetailsService;
     }
 

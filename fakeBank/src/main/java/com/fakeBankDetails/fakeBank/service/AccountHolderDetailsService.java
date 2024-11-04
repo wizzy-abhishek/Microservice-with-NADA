@@ -3,6 +3,7 @@ package com.fakeBankDetails.fakeBank.service;
 import com.fakeBankDetails.fakeBank.dto.AccountHoldersDetailsDTO;
 import com.fakeBankDetails.fakeBank.entity.AccountHoldersDetails;
 import com.fakeBankDetails.fakeBank.repository.AccountHolderDetailsRepo;
+import com.fakeBankDetails.fakeBank.service.interfaces.AccountHolderDetailService;
 import com.fakeBankDetails.fakeBank.utils.IndianStateMappingCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
-public class AccountHolderDetailsService {
+public class AccountHolderDetailsService implements AccountHolderDetailService {
 
     private final ModelMapper modelMapper ;
     private final AccountHolderDetailsRepo holderDetailsRepo ;
@@ -42,7 +43,7 @@ public class AccountHolderDetailsService {
         return modelMapper.map( savedAHD , AccountHoldersDetailsDTO.class);
     }
 
-    public static long generateUniqueLongID() {
+    private long generateUniqueLongID() {
         UUID uuid = UUID.randomUUID();
         long uniqueLongID = uuid.getMostSignificantBits();
         return uniqueLongID < 0 ? -uniqueLongID : uniqueLongID;

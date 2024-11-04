@@ -2,7 +2,7 @@ package com.fakeBankDetails.fakeBank.filters;
 
 import com.fakeBankDetails.fakeBank.entity.UserEntity;
 import com.fakeBankDetails.fakeBank.repository.UserRepo;
-import com.fakeBankDetails.fakeBank.service.JWTService;
+import com.fakeBankDetails.fakeBank.service.interfaces.JWTServiceInterface;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,10 +22,10 @@ public class JWTFilter extends OncePerRequestFilter {
     @Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver handlerExceptionResolver ;
 
-    private final JWTService jwtService ;
+    private final JWTServiceInterface jwtService ;
     private final UserRepo userRepo;
 
-    public JWTFilter(JWTService jwtService, UserRepo userRepo) {
+    public JWTFilter(JWTServiceInterface jwtService, UserRepo userRepo) {
         this.jwtService = jwtService;
         this.userRepo = userRepo;
     }

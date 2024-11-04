@@ -1,12 +1,13 @@
 package com.fakeBankDetails.fakeBank.service;
 
+import com.fakeBankDetails.fakeBank.service.interfaces.EmailServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailService {
+public class EmailService implements EmailServiceInterface {
 
     @Autowired
     private JavaMailSender javaMailSender ;
@@ -19,5 +20,4 @@ public class EmailService {
         javaMailSender.send(mail);
 
     }
-
 }
