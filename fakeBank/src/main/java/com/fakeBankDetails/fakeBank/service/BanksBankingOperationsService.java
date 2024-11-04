@@ -23,14 +23,14 @@ public class BanksBankingOperationsService implements BanksBankingOperationServi
 
     @Override
     @Transactional
-    public AccountHoldersDetailsDTO withdrawal(int amount , String account){
+    public AccountHoldersDetailsDTO withdrawal(String account , int amount){
 
         AccountHoldersDetails accountHoldersDetails = accountHolderDetailsRepo.findByAccountNumber(account)
                 .orElseThrow(() -> new ResourceNotFoundException("NO ACCOUNT FOUND"));
         if(accountHoldersDetails.getBalance() < amount){
             throw new InsufficientFundException("Insufficient Fund");
         }
-        float balance = accountHoldersDetails.getBalance() - amount ;
+        double balance = accountHoldersDetails.getBalance() - amount ;
         accountHoldersDetails.setBalance(balance);
         AccountHoldersDetails savedAccountHoldersDetails = accountHolderDetailsRepo.save(accountHoldersDetails);
 
@@ -42,7 +42,7 @@ public class BanksBankingOperationsService implements BanksBankingOperationServi
     public AccountHoldersDetailsDTO deposit(int amt , String account){
         AccountHoldersDetails accountHoldersDetails = accountHolderDetailsRepo.findByAccountNumber(account)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
-        float newBalance = accountHoldersDetails.getBalance() + amt ;
+        double newBalance = accountHoldersDetails.getBalance() + amt ;
         accountHoldersDetails.setBalance(newBalance);
         AccountHoldersDetails savedAccountHoldersDetails = accountHolderDetailsRepo.save(accountHoldersDetails);
 
@@ -54,7 +54,7 @@ public class BanksBankingOperationsService implements BanksBankingOperationServi
     public AccountHoldersDetailsDTO transfer(int amt , String from , String to){
         AccountHoldersDetails fromAccount = accountHolderDetailsRepo.findByAccountNumber(from)
                 .orElseThrow(() -> new ResourceNotFoundException("Sender's account not found"));
-        float senderBalance = fromAccount.getBalance();
+        double senderBalance = fromAccount.getBalance();
         if(senderBalance < amt){
             throw new InsufficientFundException("Sender Balance insufficient.");
         }
@@ -68,8 +68,8 @@ public class BanksBankingOperationsService implements BanksBankingOperationServi
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public float checkBalance(String account){
+    @Transactional()
+    public double checkBalance(String account){
         AccountHoldersDetails accountHoldersDetails =  accountHolderDetailsRepo.findByAccountNumber(account)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
         return accountHoldersDetails.getBalance();

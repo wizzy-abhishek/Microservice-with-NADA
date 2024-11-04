@@ -16,7 +16,7 @@ public class AccountHoldersDetailsDTO {
     private String name ;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private float balance ;
+    private double balance ;
 
     private String email ;
 

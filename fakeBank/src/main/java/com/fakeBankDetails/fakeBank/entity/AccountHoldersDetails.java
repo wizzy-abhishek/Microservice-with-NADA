@@ -23,7 +23,7 @@ public class AccountHoldersDetails {
 
     private String email ;
 
-    private float balance ;
+    private double balance ;
 
     private long mobile ;
 
